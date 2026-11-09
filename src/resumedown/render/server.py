@@ -6,8 +6,8 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Thread
 
-from resume_builder.conventions import ASSETS_FOLDER_NAME
-from resume_builder.render.renderer import render_resume
+from resumedown.conventions import ASSETS_FOLDER_NAME
+from resumedown.render.renderer import render_resume
 
 # Loopback only: the served folder is never reachable from the network.
 _HOST = "127.0.0.1"
@@ -58,7 +58,7 @@ def preview_resume(md_path: str | Path) -> str:
     the next call, or the end of the Python session. For interactive use.
 
     Args:
-        md_path: the `.md` file, with `resume_builder_files/` next to it.
+        md_path: the `.md` file, with `resumedown_files/` next to it.
 
     Returns:
         str: the URL of the page.
@@ -66,7 +66,7 @@ def preview_resume(md_path: str | Path) -> str:
     Raises:
         FileNotFoundError: `md_path` does not exist.
         ValueError: `md_path` is empty or its frontmatter is invalid.
-        NotADirectoryError: `resume_builder_files/` is missing.
+        NotADirectoryError: `resumedown_files/` is missing.
 
     Examples:
         >>> preview_resume("resume/resume.md")

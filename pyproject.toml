@@ -1,10 +1,10 @@
 [project]
-name = "resume-builder"
+name = "resumedown"
 dynamic = ["version"]
 description = "Write your resume in Markdown, render it to paginated HTML and PDF"
 readme = "README.md"
 authors = [
-    { name = "clement", email = "cberthet.contact@gmail.com" }
+    { name = "Clement Berthet", email = "cberthet.contact@gmail.com" }
 ]
 requires-python = ">=3.11"
 dependencies = [
@@ -30,7 +30,7 @@ source = "vcs"
 local_scheme = "no-local-version"
 
 [tool.hatch.build.hooks.vcs]
-version-file = "src/resume_builder/_version.py"
+version-file = "src/resumedown/_version.py"
 
 [dependency-groups]
 lint = ["ruff>=0.16.1"]
@@ -40,7 +40,7 @@ type = [
 ]
 test = ["pytest>=9.1.1",
     "pytest-cov>=7.1.0",
-    "resume-builder[pdf]"]
+    "resumedown[pdf]"]
 
 dev = [
     {include-group = "lint"},
@@ -91,4 +91,4 @@ dependency_groups = ["type", "test"]
 commands = [["mypy", "src", "tests"]]
 
 [tool.tox.env.py313]
-set_env = { PYTEST_ADDOPTS = "--cov=resume_builder --cov-report=term-missing" }
+set_env = { PYTEST_ADDOPTS = "--cov=resumedown --cov-report=term-missing" }

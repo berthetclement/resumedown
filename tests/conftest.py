@@ -2,9 +2,9 @@ from pathlib import Path
 
 import pytest
 
-from resume_builder.models.resume_model import Resume
-from resume_builder.template.default_resume import DEFAULT_RESUME
-from resume_builder.template.markdown_writer import _write_model_to_markdown
+from resumedown.models.resume_model import Resume
+from resumedown.template.default_resume import DEFAULT_RESUME
+from resumedown.template.markdown_writer import _write_model_to_markdown
 
 
 # Instance of Pydantic base model

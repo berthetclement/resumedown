@@ -1,4 +1,4 @@
-from resume_builder.conventions import CONTAINER_NAME
+from resumedown.conventions import CONTAINER_NAME
 
 # Jinja2 template context keys (see render/templates/resume.html.j2)
 CSS_KEY = "css"

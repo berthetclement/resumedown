@@ -5,10 +5,10 @@ from pathlib import Path
 
 import pytest
 
-from resume_builder.conventions import ASSETS_FOLDER_NAME
-from resume_builder.render import renderer_pdf
-from resume_builder.render.renderer_pdf import _html_to_pdf, render_pdf
-from resume_builder.template.markdown_writer import init_resume
+from resumedown.conventions import ASSETS_FOLDER_NAME
+from resumedown.render import renderer_pdf
+from resumedown.render.renderer_pdf import _html_to_pdf, render_pdf
+from resumedown.template.markdown_writer import init_resume
 
 
 # no need ["pdf"] extra lib installed
@@ -26,9 +26,7 @@ def test_render_pdf_import_lib_not_found(monkeypatch: pytest.MonkeyPatch, tmp_pa
     monkeypatch.setitem(sys.modules, "playwright", None)
 
     # then
-    with pytest.raises(
-        ImportError, match=re.escape("render_pdf needs the [pdf] extra: pip install resume-builder[pdf]")
-    ):
+    with pytest.raises(ImportError, match=re.escape("render_pdf needs the [pdf] extra: pip install resumedown[pdf]")):
         render_pdf(tmp_path / "nothing.md")
 
 

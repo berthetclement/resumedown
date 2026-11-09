@@ -1,6 +1,6 @@
 from itertools import pairwise
 
-from resume_builder.models.constants import (
+from resumedown.models.constants import (
     CONTACT_SECTION_TITLE,
     EDUCATION_SECTION_TITLE,
     EXPERIENCES_SECTION_TITLE,
@@ -8,7 +8,7 @@ from resume_builder.models.constants import (
     PERSONAL_PROJECTS_SECTION_TITLE,
     SKILLS_SECTION_TITLE,
 )
-from resume_builder.models.resume_model import Resume
+from resumedown.models.resume_model import Resume
 
 """Pin the Markdown contract that `_write_model_to_markdown` produces.
 

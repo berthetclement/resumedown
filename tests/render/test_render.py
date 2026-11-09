@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from resume_builder.render.renderer import render_resume
-from resume_builder.template.markdown_writer import init_resume
+from resumedown.render.renderer import render_resume
+from resumedown.template.markdown_writer import init_resume
 
 
 def test_render_raises_file_not_found(tmp_path: Path) -> None:
@@ -73,8 +73,8 @@ def test_render_without_frontmatter_links_internal_assets(tmp_path: Path) -> Non
     html = output_path.read_text(encoding="utf-8")
     assert html.count("<link") == 1
     assert html.count("<script") == 1
-    assert '<link rel="stylesheet" href="resume_builder_files/resume.css">' in html
-    assert '<script src="resume_builder_files/paged.polyfill.min.js"></script>' in html
+    assert '<link rel="stylesheet" href="resumedown_files/resume.css">' in html
+    assert '<script src="resumedown_files/paged.polyfill.min.js"></script>' in html
 
 
 def test_render_ignores_unknown_frontmatter_keys(tmp_path: Path) -> None:
@@ -103,7 +103,7 @@ def test_render_with_frontmatter_links_custom_assets_ordered(tmp_path: Path) -> 
     html = output_path.read_text(encoding="utf-8")
     assert html.count("<link") == 2
     list_links = re.findall(r'<link rel="stylesheet" href="([^"]+)">', html)
-    assert list_links[0] == "resume_builder_files/resume.css"
+    assert list_links[0] == "resumedown_files/resume.css"
     assert list_links[1] == "my-theme.css"
 
 

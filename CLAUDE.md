@@ -1,4 +1,4 @@
-# resume-builder
+# resumedown
 
 Python lib to generate resumes (Markdown -> HTML/PDF), modeled on R's **pagedown**.
 
@@ -28,7 +28,7 @@ deliberate — see `claude_private/pagedown-notes.md` for why. The code is not f
 aligned with it yet; the remaining gaps are tracked in
 `claude_private/pipeline-schema.md`.
 
-Its executable form is `src/resume_builder/conventions.py`, a leaf module that imports
+Its executable form is `src/resumedown/conventions.py`, a leaf module that imports
 nothing and is read by `models/`, `template/` and `render/` alike — so the writer and
 the parser cannot drift apart. It may hold functions as long as they stay pure and talk
 only about the format; anything needing `FieldInfo`, `BaseModel`, `Token` or a `Path`
@@ -260,7 +260,7 @@ follows the same rule: the PDF lands next to the `.md` too.
 `init_resume(path)` creates **one folder per resume**, like
 `rmarkdown::draft(create_dir = TRUE)`: the last part of `path` (a trailing `.md` is
 dropped) names both the folder and the `.md` inside it, so `init_resume("cvs/jane")`
-writes `cvs/jane/jane.md`, and the bundled assets go into `cvs/jane/resume_builder_files/`.
+writes `cvs/jane/jane.md`, and the bundled assets go into `cvs/jane/resumedown_files/`.
 If `path` already exists, even as an empty folder, it raises `FileExistsError` before
 writing anything. There is no `force`: a folder the user has started editing, a
 customised `theme.css` above all, is never touched. Starting over means deleting the
@@ -269,10 +269,10 @@ what sits next to it.
 
 Load order in the page, fixed by the renderer:
 
-1. `resume_builder_files/resume.css` — always, first. The layout.
+1. `resumedown_files/resume.css` — always, first. The layout.
 2. the frontmatter `css` entries, in the order given — so a user stylesheet (typically
    the copied `theme.css`, uncommented in the frontmatter) overrides the layout.
-3. `resume_builder_files/paged.polyfill.min.js` — always, the only script, last in
+3. `resumedown_files/paged.polyfill.min.js` — always, the only script, last in
    `<body>`, after the content it paginates.
 
 ### CSS
@@ -293,11 +293,11 @@ paginated PDF or an exception, never a blank PDF**: `page.pdf()` happily prints 
 paged.js never touched, with no error. In order:
 
 1. `importlib.util.find_spec("playwright")`, before anything else: without the `[pdf]`
-   extra, an `ImportError` naming `resume-builder[pdf]`. Playwright itself is imported
-   only inside the function, so `import resume_builder` works on the base install.
+   extra, an `ImportError` naming `resumedown[pdf]`. Playwright itself is imported
+   only inside the function, so `import resumedown` works on the base install.
 2. `render_resume(md_path)`, always: it checks the `.md`, and a PDF built from an HTML
    left over from an earlier render could silently lag behind the edited file.
-3. `resume_builder_files/` must sit next to the `.md` (`NotADirectoryError`), checked
+3. `resumedown_files/` must sit next to the `.md` (`NotADirectoryError`), checked
    here rather than discovered as a timeout.
 4. `_html_to_pdf()`, private, trusts its caller and does not re-check the HTML. It
    serves the folder with `local_server()` (`render/server.py`: `127.0.0.1`, port 0,
@@ -320,7 +320,7 @@ and stopped the server before the page loaded. One preview at a time: the module
 `ExitStack` `_PREVIEW` holds it, every call `close()`s the previous one before entering
 the new `local_server()`, and `stop_preview()` is that same `close()`. Quitting Python
 stops it too. Interactive use only: a script exits, and its server with it. Like
-`render_pdf`, it raises `NotADirectoryError` when `resume_builder_files/` is missing.
+`render_pdf`, it raises `NotADirectoryError` when `resumedown_files/` is missing.
 Tests never open a browser: they monkeypatch `webbrowser.open`, read the page with
 `urlopen`, and call `stop_preview()` in a `finally`, since `_PREVIEW` is shared state.
 
@@ -337,9 +337,9 @@ deliberately asymmetric.
 
 The Jinja2 template is a real file
 (`render/templates/resume.html.j2`, loaded via `PackageLoader`) — hatchling ships
-non-`.py` files under `src/resume_builder/` in the wheel automatically.
+non-`.py` files under `src/resumedown/` in the wheel automatically.
 
-Tests live in `tests/`, mirroring the `src/resume_builder/` package structure.
+Tests live in `tests/`, mirroring the `src/resumedown/` package structure.
 
 Deeper notes live in `claude_private/`, which is gitignored — a fresh clone will not
 have it, and everything normative is in this file instead. Locally: `pipeline-schema.md` (the two axes, Markdown-based
@@ -352,13 +352,13 @@ are), `css-layout-notes.md`, `devops-setup.md`, `project-goals.md`.
 - Build backend: **hatchling**.
 - Python version: floor `>=3.11` (`requires-python`), dev on **3.13**.
 - Runtime dependencies: **markdown-it-py[plugins]** (Markdown parsing, incl. `mdit-py-plugins` for Pandoc-style attributes/fenced-divs/frontmatter), **pydantic** (structured resume data model).
-- Optional extra `[pdf]`: **playwright**, for `render_pdf()`. The base install renders HTML only (the user can print it from a browser); `pip install resume-builder[pdf]` adds the PDF step. Chromium is a browser binary, not a Python package: it is installed apart, once per machine, with `uv run playwright install chromium`.
+- Optional extra `[pdf]`: **playwright**, for `render_pdf()`. The base install renders HTML only (the user can print it from a browser); `pip install resumedown[pdf]` adds the PDF step. Chromium is a browser binary, not a Python package: it is installed apart, once per machine, with `uv run playwright install chromium`.
 - Dev tooling: **ruff** (lint + format), **mypy** (strict), **pytest**, **pre-commit**, **tox** (+ `tox-uv`).
-- Dev dependencies are split into PEP 735 groups in `pyproject.toml`: `lint`, `type`, `test`, and `dev` (which includes all three plus `pre-commit`/`tox`/`tox-uv`). Plain `uv sync` installs everything via the `dev` group. A developer gets everything: `test` lists `resume-builder[pdf]` (the project itself with its extra), so Playwright comes with it; `include-group` cannot reference an extra.
+- Dev dependencies are split into PEP 735 groups in `pyproject.toml`: `lint`, `type`, `test`, and `dev` (which includes all three plus `pre-commit`/`tox`/`tox-uv`). Plain `uv sync` installs everything via the `dev` group. A developer gets everything: `test` lists `resumedown[pdf]` (the project itself with its extra), so Playwright comes with it; `include-group` cannot reference an extra.
 - tox runs on tox-uv's `uv-venv-lock-runner` with `package = "wheel"` (`[tool.tox.env_run_base]`). Every env is built by `uv sync --locked` from `uv.lock`, same as `.venv`, so tox and `.venv` never disagree on a version — and Playwright always matches the Chromium revision installed from the lock (each Playwright release expects its own). The lock moves only when you move it (`uv add`, `uv lock --upgrade`), never as a side effect of tox recreating an env. `package = "wheel"` overrides the runner's `editable` default: tests run against the built wheel, not `src/`, so a non-`.py` file missing from the wheel (template, CSS, polyfill) fails the suite instead of passing silently. Trade-off accepted: CI no longer sees new dependency releases on its own; that signal is meant to come from lock upgrades in their own PR, never mixed into a feature.
 - CI: GitHub Actions (`.github/workflows/ci.yml`), matrix over Windows/Linux/macOS, on every push to any branch. Ubuntu runs the full tox matrix (`py311`/`py312`/`py313`/`lint`/`type`); Windows/macOS only run the `py311`/`py312`/`py313` test envs (lint/type are OS-independent, no need to repeat them, and macOS Actions minutes are the most constrained).
 - PDF tests in CI: **Ubuntu and Windows, not macOS.** Many users are on Windows, so it cannot be skipped; macOS is the slowest and most limited runner. PDF tests carry the pytest marker `pdf`; macOS runs `-m "not pdf"`. The exclusion is explicit, never "skip when Chromium is missing": a broken install would then turn every PDF test into a silent skip on a green CI. Chromium is installed by one step **per OS**: Ubuntu with `--with-deps` (system libraries), Windows without it, because on Windows Server `--with-deps` installs the Server-Media-Foundation feature (read in Playwright 1.64's `install_media_pack.ps1`), useless for a PDF.
-- Versioning: **hatch-vcs** derives the package version from git (tags/commit distance), not a hand-edited `version` field. `src/resume_builder/_version.py` is generated automatically on every `uv sync`/build — it's gitignored, never edited by hand, and exposed as `resume_builder.__version__`. Requires an actual git clone (with history) to resolve correctly; a ZIP download or shallow clone won't compute the version properly.
+- Versioning: **hatch-vcs** derives the package version from git (tags/commit distance), not a hand-edited `version` field. `src/resumedown/_version.py` is generated automatically on every `uv sync`/build — it's gitignored, never edited by hand, and exposed as `resumedown.__version__`. Requires an actual git clone (with history) to resolve correctly; a ZIP download or shallow clone won't compute the version properly.
 
 ## Available commands
 
@@ -367,7 +367,7 @@ uv sync                                    # installs deps (project + dev group)
 uv run playwright install chromium         # one-time per machine: the browser render_pdf() drives
 uv run playwright install --list           # where Chromium is installed, and for which Playwright version
 uv build                                   # generates wheel + sdist in dist/
-uv run python -c "import resume_builder"   # sanity-checks that the package imports
+uv run python -c "import resumedown"   # sanity-checks that the package imports
 
 uv run pre-commit install                  # one-time per clone: wires up the git commit hook
 uv run pre-commit run --all-files          # run ruff check/format + mypy against the whole repo
@@ -375,6 +375,6 @@ uv run pre-commit run --all-files          # run ruff check/format + mypy agains
 uv run ruff check .                        # lint
 uv run mypy src tests                      # type-check (strict) — src and tests both, kept in sync with pre-commit/tox
 uv run pytest                              # run tests
-uv run pytest --cov=resume_builder --cov-report=term-missing tests/ # coverage
+uv run pytest --cov=resumedown --cov-report=term-missing tests/ # coverage
 uv run tox -p                              # run the full matrix (py311/py312/py313/lint/type) in parallel, local dev only (CI runs it sequentially, see below)
 ```

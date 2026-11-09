@@ -1,12 +1,12 @@
 ---
 name: resume-stylesheet
-description: Rules and verification loop for the paginated CV stylesheet. Use when editing src/resume_builder/assets/resume.css or theme.css, when the rendered HTML or PDF looks wrong (shifted columns, missing band, overlapping dates, a blank PDF), or when writing a test that asserts something about a rendered resume.
+description: Rules and verification loop for the paginated CV stylesheet. Use when editing src/resumedown/assets/resume.css or theme.css, when the rendered HTML or PDF looks wrong (shifted columns, missing band, overlapping dates, a blank PDF), or when writing a test that asserts something about a rendered resume.
 ---
 
 # Working on the resume stylesheet
 
 The CV is paginated by **pagedjs 0.4.3**, vendored at
-`src/resume_builder/assets/paged.polyfill.min.js`. Paged.js rewrites the document
+`src/resumedown/assets/paged.polyfill.min.js`. Paged.js rewrites the document
 while it paginates, so several ordinary CSS assumptions do not hold. Each rule below
 cost a debugging session; the symptom is given first, because that is how you will
 meet it.
@@ -76,9 +76,9 @@ PDF unless that argument is passed.
 
 | file | belongs to | edit it? |
 |---|---|---|
-| `src/resume_builder/assets/resume.css` | the library | yes — this is the layout |
-| `src/resume_builder/assets/theme.css` | the user, after init | only its comments and its *taste* values |
-| `resume_builder_files/*` in a user's folder | copies | no — regenerated |
+| `src/resumedown/assets/resume.css` | the library | yes — this is the layout |
+| `src/resumedown/assets/theme.css` | the user, after init | only its comments and its *taste* values |
+| `resumedown_files/*` in a user's folder | copies | no — regenerated |
 
 `theme.css` is loaded **after** `resume.css`, so anything there wins. Only put values
 in it that are a matter of taste (colours, fonts, base size): an active declaration

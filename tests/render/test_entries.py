@@ -1,7 +1,7 @@
 import re
 
-from resume_builder.render.entries import wrap_entries
-from resume_builder.render.renderer import build_parser
+from resumedown.render.entries import wrap_entries
+from resumedown.render.renderer import build_parser
 
 
 def _render(markdown: str) -> str:

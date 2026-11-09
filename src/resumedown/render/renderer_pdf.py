@@ -1,9 +1,9 @@
 import importlib.util
 from pathlib import Path
 
-from resume_builder.conventions import ASSETS_FOLDER_NAME
-from resume_builder.render.renderer import render_resume
-from resume_builder.render.server import local_server
+from resumedown.conventions import ASSETS_FOLDER_NAME
+from resumedown.render.renderer import render_resume
+from resumedown.render.server import local_server
 
 _PAGED_FLAG = "__pagedDone"
 _PAGED_HOOK = f"window.PagedConfig = {{ after: () => {{ window.{_PAGED_FLAG} = true; }} }};"
@@ -15,7 +15,7 @@ def _html_to_pdf(html_path: Path) -> Path:
     """Print an HTML resume to a PDF next to it, once paged.js has paginated it.
 
     Private: `render_pdf()` is the only caller and guarantees that `html_path`
-    exists with `resume_builder_files/` next to it, so nothing is re-checked here.
+    exists with `resumedown_files/` next to it, so nothing is re-checked here.
     The folder is served over HTTP (`local_server`), never `file://`, and the
     PDF is printed only after paged.js's `after` hook has fired.
 
@@ -63,7 +63,7 @@ def render_pdf(md_path: str | Path) -> Path:
     paged.js has paginated it. The PDF is written next to the `.md`.
 
     Args:
-        md_path: Path to the source `.md` file, with `resume_builder_files/`
+        md_path: Path to the source `.md` file, with `resumedown_files/`
             next to it (as set up by `init_resume()`).
 
     Returns:
@@ -72,12 +72,12 @@ def render_pdf(md_path: str | Path) -> Path:
     Raises:
         ImportError: The `[pdf]` extra (Playwright) is not installed.
         FileNotFoundError: `md_path` does not exist.
-        NotADirectoryError: `resume_builder_files/` is missing next to `md_path`.
+        NotADirectoryError: `resumedown_files/` is missing next to `md_path`.
         RuntimeError: paged.js did not finish paginating within the timeout.
     """
     # raise error if optional dep are not installed
     if importlib.util.find_spec("playwright") is None:
-        raise ImportError("render_pdf needs the [pdf] extra: pip install resume-builder[pdf]")
+        raise ImportError("render_pdf needs the [pdf] extra: pip install resumedown[pdf]")
 
     md_path = Path(md_path)
 

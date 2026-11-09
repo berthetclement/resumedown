@@ -13,8 +13,8 @@ within one entry.
 
 from markdown_it.token import Token
 
-from resume_builder.conventions import ENTRY_CLASS, ENTRY_HEADING_LEVEL
-from resume_builder.render.constants import (
+from resumedown.conventions import ENTRY_CLASS, ENTRY_HEADING_LEVEL
+from resumedown.render.constants import (
     TOKEN_CONTAINER_CLOSE,
     TOKEN_CONTAINER_OPEN,
     TOKEN_ENTRY_CLOSE,
