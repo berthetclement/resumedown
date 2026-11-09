@@ -1,5 +1,5 @@
-from resume_builder.models.resume_model import BriefEntry, Entry, Main, Resume, TitledEntry
-from resume_builder.template.constants import (
+from resumedown.models.resume_model import BriefEntry, Entry, Main, Resume, TitledEntry
+from resumedown.template.constants import (
     CONTACT_DESCRIPTION,
     DESCRIPTION_MAIN_VALUE,
     EDUCATION,

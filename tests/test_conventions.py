@@ -1,6 +1,6 @@
 import pytest
 
-from resume_builder.conventions import SECTION_BREAK, anchor, heading_marker, join_blocks
+from resumedown.conventions import SECTION_BREAK, anchor, heading_marker, join_blocks
 
 
 # join_blocks owns the separator: one blank line inside a section, two between sections.

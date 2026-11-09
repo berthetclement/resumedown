@@ -6,7 +6,7 @@ from urllib.request import urlopen
 
 import pytest
 
-from resume_builder.render.server import local_server, preview_resume, stop_preview
+from resumedown.render.server import local_server, preview_resume, stop_preview
 
 
 def test_server_raise_directory_not_found(tmp_path: Path) -> None:
@@ -91,7 +91,7 @@ def test_preview_serves_page_until_stopped(monkeypatch: pytest.MonkeyPatch, tmp_
     directory.mkdir()
     md_file = directory / "resume.md"
     md_file.write_text("# Resume", encoding="utf-8")
-    asset_dir = directory / "resume_builder_files"
+    asset_dir = directory / "resumedown_files"
     asset_dir.mkdir()
 
     def fake_open(url: str) -> None:
@@ -119,7 +119,7 @@ def test_preview_second_call_replaces_the_first(monkeypatch: pytest.MonkeyPatch,
     # given
     md_file = tmp_path / "resume.md"
     md_file.write_text("# Resume", encoding="utf-8")
-    (tmp_path / "resume_builder_files").mkdir()
+    (tmp_path / "resumedown_files").mkdir()
     monkeypatch.setattr(webbrowser, "open", lambda url: None)
 
     # when

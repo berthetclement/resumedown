@@ -3,7 +3,7 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
-from resume_builder.conventions import (
+from resumedown.conventions import (
     ASSET_CSS_BUILTIN_FILE_NAME,
     ASSET_CSS_USER_FILE_NAME,
     ASSET_JS_BUILTIN_FILE_NAME,
@@ -18,9 +18,9 @@ from resume_builder.conventions import (
     heading_marker,
     join_blocks,
 )
-from resume_builder.models.resume_model import Resume
-from resume_builder.template.constants import YAML_FRONT_MATTER
-from resume_builder.template.default_resume import DEFAULT_RESUME
+from resumedown.models.resume_model import Resume
+from resumedown.template.constants import YAML_FRONT_MATTER
+from resumedown.template.default_resume import DEFAULT_RESUME
 
 RESOURCE_ASSETS_PATH = Path(__file__).parent.parent / "assets"
 
@@ -83,7 +83,7 @@ def _write_model_to_markdown(model: Resume, file_path: Path) -> None:
 def init_resume(path: str | Path = INIT_RESUME_FILE_NAME) -> Path:
     """
     Initializes a new resume Markdown file in a folder (file and folder have same name).
-     Rendering needs assets: they are copied into the `resume_builder_files` folder next to it.
+     Rendering needs assets: they are copied into the `resumedown_files` folder next to it.
     Args:
         path (str | Path): Used both as a name folder or as a filename (with '.md' extension or not).
     Returns:
@@ -93,7 +93,7 @@ def init_resume(path: str | Path = INIT_RESUME_FILE_NAME) -> Path:
         FileExistsError: If the directory already exists (even empty).
     Examples:
         >>> init_resume()  # resume/resume.md
-        >>> init_resume("cvs/jane")  # cvs/jane/jane.md, assets in cvs/jane/resume_builder_files/
+        >>> init_resume("cvs/jane")  # cvs/jane/jane.md, assets in cvs/jane/resumedown_files/
     """
     path = Path(path)
     if path.suffix not in ("", ".md"):

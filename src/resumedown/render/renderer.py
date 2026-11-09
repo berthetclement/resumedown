@@ -7,16 +7,16 @@ from mdit_py_plugins.attrs import attrs_block_plugin
 from mdit_py_plugins.container import container_plugin
 from mdit_py_plugins.front_matter import front_matter_plugin
 
-from resume_builder.conventions import (
+from resumedown.conventions import (
     CONTAINER_NAME,
     PATH_CSS_BUILTIN,
     PATH_JS_BUILTIN,
 )
-from resume_builder.render.constants import CONTENT_KEY, CSS_KEY, JS_KEY, TOKEN_FRONT_MATTER
-from resume_builder.render.entries import wrap_entries
+from resumedown.render.constants import CONTENT_KEY, CSS_KEY, JS_KEY, TOKEN_FRONT_MATTER
+from resumedown.render.entries import wrap_entries
 
 # autoescape stays off: `content` is already-rendered HTML and must not be escaped
-_env = Environment(loader=PackageLoader("resume_builder.render", "templates"))
+_env = Environment(loader=PackageLoader("resumedown.render", "templates"))
 
 
 def _asset_list(value: object) -> list[str]:

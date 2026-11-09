@@ -2,8 +2,8 @@ from typing import Annotated
 
 from pydantic import BaseModel, Field
 
-from resume_builder.conventions import CUSTOM_FIELD
-from resume_builder.models.constants import (
+from resumedown.conventions import CUSTOM_FIELD
+from resumedown.models.constants import (
     CONTACT_SECTION_TITLE,
     EDUCATION_SECTION_TITLE,
     EXPERIENCES_SECTION_TITLE,

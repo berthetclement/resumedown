@@ -1,6 +1,6 @@
-# Resume builder
+# resumedown
 
-[![CI](https://github.com/berthetclement/resume_builder/actions/workflows/ci.yml/badge.svg)](https://github.com/berthetclement/resume_builder/actions/workflows/ci.yml)
+[![CI](https://github.com/berthetclement/resumedown/actions/workflows/ci.yml/badge.svg)](https://github.com/berthetclement/resumedown/actions/workflows/ci.yml)
 
 This library provides you a markdown template that you can personalize and customize to have a render as your own resume.
 
@@ -15,13 +15,13 @@ You have the choice to install the library with optional dependencies:
 Currently, the library is only available on github.
 
 ```sh
-pip install "resume-builder @ git+https://github.com/berthetclement/resume_builder"
+pip install "resumedown @ git+https://github.com/berthetclement/resumedown"
 ```
 
 To render the PDF directly, install the `pdf` extra, then `Chromium` (once per machine).
 
 ```sh
-pip install "resume-builder[pdf] @ git+https://github.com/berthetclement/resume_builder"
+pip install "resumedown[pdf] @ git+https://github.com/berthetclement/resumedown"
 ```
 
 The library `playwright` uses a specific version of `Chromium` (only `Chromium` is used in this lib).
@@ -38,7 +38,7 @@ Usage:
 - View the html file in your browser
 
 ```python
-from resume_builder import init_resume, render_resume
+from resumedown import init_resume, render_resume
 
 # default: resume/resume.md
 output_path = init_resume()
@@ -50,7 +50,7 @@ render_resume(output_path)
 Most of time, you don't want only generate the html file but visualize it. You can use directly `preview_resume()` instead of `render_resume` after initialisation step.
 
 ```python
-from resume_builder import preview_resume
+from resumedown import preview_resume
 
 # generate html + displaying
 preview_resume("resume/resume.md")
@@ -61,7 +61,7 @@ At this step you can print html page to PDF with your own browser (see "NOTE" se
 If you have installed optional dependencies `[pdf]`, you can directly render the markdown file into a pdf file.
 
 ```python
-from resume_builder import render_pdf
+from resumedown import render_pdf
 
 # generate the pdf output (near markdown file)
 render_pdf("resume/resume.md")
@@ -84,7 +84,7 @@ Let's see these steps below.
 ```
 resume/
 ├── resume.md                  # your resume: edit this file
-└── resume_builder_files/
+└── resumedown_files/
     ├── resume.css             # layout
     ├── theme.css              # colours and fonts, yours to edit
     └── paged.polyfill.min.js  # pagination
@@ -94,7 +94,7 @@ Follow these steps to customize it to your needs:
 
 1. Edit `resume.md` with your information.
 2. Optional: to change colours and fonts, uncomment the `css` lines in the frontmatter
-   of `resume.md`, then edit `resume_builder_files/theme.css`.
+   of `resume.md`, then edit `resumedown_files/theme.css`.
 3. Save, then run `render_resume()` to generate html page.
 4. You can display html page with `preview_resume()` or directly use `render_pdf()`.
 

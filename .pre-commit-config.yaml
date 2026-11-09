@@ -18,5 +18,5 @@ repos:
         entry: uv run mypy src tests
         language: system
         pass_filenames: false
-        files: ^(src/resume_builder/|tests/)
+        files: ^(src/resumedown/|tests/)
         types: [python]

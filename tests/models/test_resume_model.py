@@ -1,7 +1,7 @@
 import pytest
 from pydantic import BaseModel
 
-from resume_builder.models.resume_model import BriefEntry, Entry, Main, Resume, TitledEntry
+from resumedown.models.resume_model import BriefEntry, Entry, Main, Resume, TitledEntry
 
 
 # Every class have a strict structured and ordered fields

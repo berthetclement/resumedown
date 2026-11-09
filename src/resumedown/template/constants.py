@@ -1,4 +1,4 @@
-from resume_builder.conventions import ASSETS_FOLDER_NAME, PATH_FILE_YAML_CSS, join_blocks
+from resumedown.conventions import ASSETS_FOLDER_NAME, PATH_FILE_YAML_CSS, join_blocks
 
 # Constants for the resume builder template
 
