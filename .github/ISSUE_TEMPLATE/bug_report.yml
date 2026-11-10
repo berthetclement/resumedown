@@ -1,0 +1,39 @@
+name: Bug report
+description: Something does not work as expected
+labels: ["bug", "Needs triage"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you saw, what you expected instead, and the full error message if any.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: The code you ran, and the part of your `.md` file involved if relevant.
+      render: python
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: resumedown version
+      description: 'Output of `python -c "import resumedown; print(resumedown.__version__)"`'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+    validations:
+      required: true
