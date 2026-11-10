@@ -9,12 +9,29 @@ authors = [
     { name = "Clement Berthet", email = "cberthet.contact@gmail.com" }
 ]
 requires-python = ">=3.11"
+keywords = ["resume", "cv", "markdown", "pdf", "pagedjs"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business",
+    "Topic :: Text Processing :: Markup :: Markdown",
+    "Typing :: Typed",
+]
 dependencies = [
     "jinja2>=3.1.6",
     "markdown-it-py[plugins]>=4.2.0",
     "pydantic>=2.13.4",
     "pyyaml>=6.0.3",
 ]
+
+[project.urls]
+Repository = "https://github.com/berthetclement/resumedown"
+Issues = "https://github.com/berthetclement/resumedown/issues"
 
 [project.optional-dependencies]
 pdf = [
@@ -33,6 +50,10 @@ local_scheme = "no-local-version"
 
 [tool.hatch.build.hooks.vcs]
 version-file = "src/resumedown/_version.py"
+
+# pyproject.toml, README.md and the license files are always added
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "licenses"]
 
 [dependency-groups]
 lint = ["ruff>=0.16.1"]
