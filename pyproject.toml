@@ -3,6 +3,8 @@ name = "resumedown"
 dynamic = ["version"]
 description = "Write your resume in Markdown, render it to paginated HTML and PDF"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE", "licenses/*"]
 authors = [
     { name = "Clement Berthet", email = "cberthet.contact@gmail.com" }
 ]
