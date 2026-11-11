@@ -1,6 +1,6 @@
 # resumedown
 
-[![CI](https://github.com/berthetclement/resumedown/actions/workflows/ci.yml/badge.svg)](https://github.com/berthetclement/resumedown/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/resumedown)](https://pypi.org/project/resumedown/) [![Python](https://img.shields.io/pypi/pyversions/resumedown)](https://pypi.org/project/resumedown/) [![License](https://img.shields.io/pypi/l/resumedown)](https://github.com/berthetclement/resumedown/blob/main/LICENSE) [![CI](https://github.com/berthetclement/resumedown/actions/workflows/ci.yml/badge.svg)](https://github.com/berthetclement/resumedown/actions/workflows/ci.yml)
 
 This library provides you a markdown template that you can personalize and customize to have a render as your own resume.
 
@@ -12,16 +12,14 @@ You have the choice to install the library with optional dependencies:
 
 ## Installation
 
-Currently, the library is only available on github.
-
 ```sh
-pip install "resumedown @ git+https://github.com/berthetclement/resumedown"
+pip install resumedown
 ```
 
 To render the PDF directly, install the `pdf` extra, then `Chromium` (once per machine).
 
 ```sh
-pip install "resumedown[pdf] @ git+https://github.com/berthetclement/resumedown"
+pip install "resumedown[pdf]"
 ```
 
 The library `playwright` uses a specific version of `Chromium` (only `Chromium` is used in this lib).
@@ -29,6 +27,12 @@ Playwright can print to PDF with Chromium only.
 
 ```sh
 playwright install chromium
+```
+
+To try the development version (`main`, not released yet):
+
+```sh
+pip install "resumedown @ git+https://github.com/berthetclement/resumedown"
 ```
 
 Usage:
