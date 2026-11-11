@@ -1,0 +1,11 @@
+name: Request
+description: A feature, an improvement or a question
+labels: ["Needs triage"]
+body:
+  - type: textarea
+    id: request
+    attributes:
+      label: Your request
+      description: What you need, and in which situation.
+    validations:
+      required: true
