@@ -33,7 +33,7 @@
      These are layout, not taste. Leaving them commented lets a later
      version of the library improve them for you. */
 
-  /* --date-width: 12mm; */             /* widen it for longer dates */
+  /* --date-width: 18mm; */             /* fits "Sept. 2021"; widen for longer dates */
   /* --date-gap: 5mm; */
   /* --dot-size: 9px; */
 

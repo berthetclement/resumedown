@@ -37,7 +37,7 @@
   --main-gap: 8mm;
 
   /* the timeline */
-  --date-width: 12mm;
+  --date-width: 18mm;
   --date-gap: 5mm;
   --rule-x: calc(var(--date-width) + var(--date-gap) / 2);
   --text-x: calc(var(--date-width) + var(--date-gap));
