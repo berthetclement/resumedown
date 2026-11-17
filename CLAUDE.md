@@ -21,6 +21,23 @@ When reviewing code:
 - Decisions made in discussion must land in the code, its tests or this file. A choice
   that lives only in a conversation is lost.
 
+## Working from GitHub (@claude)
+
+When triggered by an `@claude` comment on an issue or a pull request:
+
+- **Plan by default.** On an issue, unless the comment explicitly asks to implement,
+  answer with a plan as a comment and change nothing. When unsure, ask.
+- **One issue, one small PR.** Work on your own branch, never on `main`. The PR body
+  links the issue with `Closes #N`. Commit messages follow the repo style
+  (`fix: ...`, `feat: ...`, `docs: ...`).
+- **Check before pushing**, in this order: `uv run ruff format`, `uv run ruff check .`,
+  `uv run mypy src tests`, `uv run pytest -m "not pdf"`. The PDF tests need Chromium,
+  which this job does not install: `ci.yml` runs them on the push.
+- **Out of bounds:** `.github/workflows/` (including `publish.yml`), version tags,
+  releases, `uv.lock` upgrades. Never merge.
+- Follow the conventions below as written. If the issue seems to require changing
+  one, say so in a comment instead of changing it.
+
 ## Conventions
 
 The contract between the Markdown, the model and the CSS. Everything here is
