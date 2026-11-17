@@ -319,7 +319,6 @@ img { max-width: 100%; }
   grid-column: 1;
   grid-row: 2;
   margin: 0;
-  white-space: nowrap;
   font-size: 0.8rem;
   color: var(--muted-color);
 }
@@ -328,7 +327,6 @@ img { max-width: 100%; }
   grid-column: 1;
   grid-row: 1;
   margin: 0;
-  white-space: nowrap;
   font-size: 0.8rem;
   color: var(--muted-color);
 }
