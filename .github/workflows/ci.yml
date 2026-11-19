@@ -39,8 +39,8 @@ jobs:
 
       - name: Run tests only (Windows)
         if: matrix.os == 'windows-latest'
-        run: uv run tox -e py311,py312,py313
+        run: uv run tox -e py311,py312,py313,py314
 
       - name: Run tests only, no PDF (macOS)
         if: matrix.os == 'macos-latest'
-        run: uv run tox -e py311,py312,py313 -- -m "not pdf"
+        run: uv run tox -e py311,py312,py313,py314 -- -m "not pdf"
