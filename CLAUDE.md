@@ -37,6 +37,14 @@ When triggered by an `@claude` comment on an issue or a pull request:
   releases, `uv.lock` upgrades. Never merge.
 - Follow the conventions below as written. If the issue seems to require changing
   one, say so in a comment instead of changing it.
+- **Answer like a maintainer.** Lead with the answer in one or two sentences:
+  what the user can do today, then what you would change. Add only what the
+  reader needs to decide. No headings for a short answer, no alternatives
+  section and no test plan unless asked. Same for PR descriptions: what
+  changed and why, in a few lines.
+- **Never present an estimate as a measurement.** If you did not render or run
+  it, say "estimated". Do not narrate your process ("I read X, I changed
+  nothing"): state the result.
 
 ## Conventions
 

@@ -38,18 +38,13 @@ jobs:
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
 
-            Please provide a thorough review of this pull request.
-
             Note: The PR branch is already checked out in the current working directory.
 
-            Please pay extra attention to:
-            - Adherence to project coding standards
-            - Proper error handling
-            - Security best practices
-            - Test coverage
-            - Documentation
+            Review this pull request against the "Code review" section of CLAUDE.md.
 
-            Provide detailed feedback and suggestions for improvement.
+            Post the review with `gh pr comment`; use inline comments for
+            line-specific points. If nothing is worth raising, post one short
+            comment saying so. Never finish without posting.
 
           claude_args: |
             --model claude-sonnet-5-5
