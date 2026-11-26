@@ -30,6 +30,10 @@ When triggered by an `@claude` comment on an issue or a pull request:
 - **One issue, one small PR.** Work on your own branch, never on `main`. The PR body
   links the issue with `Closes #N`. Commit messages follow the repo style
   (`fix: ...`, `feat: ...`, `docs: ...`).
+- **Changelog.** A PR that changes what a user sees (feature, fix, supported
+  versions) adds one line under `[Unreleased]` in `CHANGELOG.md`, written for
+  the user, not as a commit message. `ci:`, `docs:` and refactor-only PRs add
+  none. Never rename `[Unreleased]` to a version: that happens at release.
 - **Check before pushing**, in this order: `uv run ruff format`, `uv run ruff check .`,
   `uv run mypy src tests`, `uv run pytest -m "not pdf"`. The PDF tests need Chromium,
   which this job does not install: `ci.yml` runs them on the push.
@@ -376,7 +380,7 @@ are), `css-layout-notes.md`, `devops-setup.md`, `project-goals.md`.
 - Project and dependency management: **uv** (no manual pip/venv — use `uv add`, `uv sync`, `uv run`).
 - Build backend: **hatchling**.
 - Python version: floor `>=3.11` (`requires-python`), dev on **3.13**.
-- Runtime dependencies: **markdown-it-py[plugins]** (Markdown parsing, incl. `mdit-py-plugins` for Pandoc-style attributes/fenced-divs/frontmatter), **pydantic** (structured resume data model).
+- Runtime dependencies: **markdown-it-py[plugins]** (Markdown parsing, incl. `mdit-py-plugins` for Pandoc-style attributes/fenced-divs/frontmatter), **pydantic** (structured resume data model), **jinja2** (HTML template), **pyyaml** (frontmatter).
 - Optional extra `[pdf]`: **playwright**, for `render_pdf()`. The base install renders HTML only (the user can print it from a browser); `pip install resumedown[pdf]` adds the PDF step. Chromium is a browser binary, not a Python package: it is installed apart, once per machine, with `uv run playwright install chromium`.
 - Dev tooling: **ruff** (lint + format), **mypy** (strict), **pytest**, **pre-commit**, **tox** (+ `tox-uv`).
 - Dev dependencies are split into PEP 735 groups in `pyproject.toml`: `lint`, `type`, `test`, and `dev` (which includes all three plus `pre-commit`/`tox`/`tox-uv`). Plain `uv sync` installs everything via the `dev` group. A developer gets everything: `test` lists `resumedown[pdf]` (the project itself with its extra), so Playwright comes with it; `include-group` cannot reference an extra.
@@ -388,7 +392,7 @@ are), `css-layout-notes.md`, `devops-setup.md`, `project-goals.md`.
 - Publishing: `.github/workflows/publish.yml`, **Trusted Publishing** (OIDC, `id-token: write` on the publish jobs only), no API token anywhere. One `build` job (`fetch-depth: 0`, or hatch-vcs misses the tag) uploads `dist/` as an artifact; the publish jobs only download and send it, with `pypa/gh-action-pypi-publish`. Two routes, each bound to a GitHub environment that PyPI's trusted publisher names:
   - **TestPyPI**: the "Run workflow" button (`workflow_dispatch`), environment `testpypi`, allowed on `main` only, no approval. Never from a branch: `0.1.devN` counts commits, so a branch and `main` collide on the same file name, which an index accepts once, forever.
   - **PyPI**: pushing a `v*` tag, environment `pypi`, allowed on `v*` tags only, with a required reviewer: the job waits for approval, so the built `dist/` can be checked before anything is sent. A release cannot be withdrawn and its metadata cannot be edited.
-  - Release: `main` green → "Run workflow" (TestPyPI), install it in a fresh venv → `git tag vX.Y.Z` on that commit, `git push origin vX.Y.Z` (one tag, never `--tags`) → approve.
+  - Release: rename `[Unreleased]` to `[X.Y.Z] - date` in `CHANGELOG.md`, merged to `main` → `main` green → "Run workflow" (TestPyPI), install it in a fresh venv → `git tag vX.Y.Z` on that commit, `git push origin vX.Y.Z` (one tag, never `--tags`) → approve.
 
 ## Available commands
 
