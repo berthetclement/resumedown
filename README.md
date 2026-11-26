@@ -16,14 +16,13 @@ You have the choice to install the library with optional dependencies:
 pip install resumedown
 ```
 
-To render the PDF directly, install the `pdf` extra, then `Chromium` (once per machine).
+To render the PDF directly, install the `pdf` extra, then `Chromium`.
 
 ```sh
 pip install "resumedown[pdf]"
 ```
 
-The library `playwright` uses a specific version of `Chromium` (only `Chromium` is used in this lib).
-Playwright can print to PDF with Chromium only.
+Playwright prints PDFs with Chromium only (see "Notes" below after an upgrade).
 
 ```sh
 playwright install chromium
@@ -60,7 +59,7 @@ from resumedown import preview_resume
 preview_resume("resume/resume.md")
 ```
 
-At this step you can print html page to PDF with your own browser (see "NOTE" section below to have a better comprehension of rendering html page).
+At this step you can print html page to PDF with your own browser (see "Notes" section below to have a better comprehension of rendering html page).
 
 If you have installed optional dependencies `[pdf]`, you can directly render the markdown file into a pdf file.
 
@@ -102,7 +101,10 @@ Follow these steps to customize it to your needs:
 3. Save, then run `render_resume()` to generate html page.
 4. You can display html page with `preview_resume()` or directly use `render_pdf()`.
 
-## Note
+## Notes
+
+### Viewing the HTML
+
 Open the HTML through a local server, not by double-clicking it:
 `paged.js` cannot paginate a page opened as `file://`.
 
@@ -115,6 +117,15 @@ python -m http.server --bind 127.0.0.1 --directory resume
 ```
 
 Then browse to <http://127.0.0.1:8000/resume.html>, and stop the server with `Ctrl+C`.
+
+### PDF: Chromium after an upgrade
+
+Playwright prints PDFs with its own Chromium, and each Playwright release expects
+a specific Chromium version. After upgrading `resumedown[pdf]`, install it again:
+
+```sh
+playwright install chromium
+```
 
 ## Changelog
 All changes and fixes made to the library are listed in the `CHANGELOG` file, organized by version.
