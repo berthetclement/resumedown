@@ -115,3 +115,8 @@ python -m http.server --bind 127.0.0.1 --directory resume
 ```
 
 Then browse to <http://127.0.0.1:8000/resume.html>, and stop the server with `Ctrl+C`.
+
+## Changelog
+All changes and fixes made to the library are listed in the `CHANGELOG` file, organized by version.
+
+See [CHANGELOG.md](https://github.com/berthetclement/resumedown/blob/main/CHANGELOG.md).

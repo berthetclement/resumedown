@@ -33,6 +33,7 @@ dependencies = [
 [project.urls]
 Repository = "https://github.com/berthetclement/resumedown"
 Issues = "https://github.com/berthetclement/resumedown/issues"
+Changelog = "https://github.com/berthetclement/resumedown/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 pdf = [
