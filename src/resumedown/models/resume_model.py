@@ -59,11 +59,13 @@ class Entry(BaseModel):
     description: str | list[str]
 
 
-# Use the `Field` function to provide titles for the sections in the resume model
+# The order is deliberate: the sidebar sections (`contact`, `skills`) come BEFORE
+# `main`. paged.js breaks the document at one point, in DOM order, so a sidebar
+# that overflows page 1 drags everything after it, `main` column included, to page 2.
 class Resume(BaseModel):
-    main: Main
     contact: BriefEntry = Field(title=CONTACT_SECTION_TITLE)
     skills: BriefEntry = Field(title=SKILLS_SECTION_TITLE)
+    main: Main
     experiences: list[Entry] = Field(title=EXPERIENCES_SECTION_TITLE)
     education: list[Entry] = Field(title=EDUCATION_SECTION_TITLE)
     personal_projects: list[Entry] = Field(title=PERSONAL_PROJECTS_SECTION_TITLE)

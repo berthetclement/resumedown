@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- The starter resume has a photo slot at the top of the sidebar, with a placeholder
+  `photo.svg` in `resumedown_files/` (#31).
 - Python 3.14 support, tested on Linux, Windows and macOS (#27).
   - Python 3.15 is not supported yet: [PyYAML](https://pypi.org/project/PyYAML/) has no wheels for it (#28).
 
 ### Fixed
+- A long skills list no longer pushes the main column to page 2: new resumes
+  write `#contact` and `#skills` before `#main`, with a compact skills list.
+  A sidebar taller than page 1 is still a known limit (#31).
 - Dates such as "Sept. 2021" no longer overflow their column: the
   default `--date-width` is now 18mm (#23).
 

@@ -6,6 +6,7 @@ from resumedown.conventions import (
     ASSET_CSS_BUILTIN_FILE_NAME,
     ASSET_CSS_USER_FILE_NAME,
     ASSET_JS_BUILTIN_FILE_NAME,
+    ASSET_PHOTO_FILE_NAME,
     ASSETS_FOLDER_NAME,
     INIT_RESUME_FILE_NAME,
 )
@@ -91,7 +92,12 @@ def test_init_resume_default(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) ->
     assert output_path_file == root / INIT_RESUME_FILE_NAME
     assert output_path_file.is_file()
 
-    assets_name_file = [ASSET_CSS_BUILTIN_FILE_NAME, ASSET_CSS_USER_FILE_NAME, ASSET_JS_BUILTIN_FILE_NAME]
+    assets_name_file = [
+        ASSET_CSS_BUILTIN_FILE_NAME,
+        ASSET_CSS_USER_FILE_NAME,
+        ASSET_JS_BUILTIN_FILE_NAME,
+        ASSET_PHOTO_FILE_NAME,
+    ]
     for asset in assets_name_file:
         path = output_path_file.parent / ASSETS_FOLDER_NAME / asset
         assert path.is_file()

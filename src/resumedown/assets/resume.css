@@ -106,6 +106,9 @@ img { max-width: 100%; }
    The two columns. Sidebar membership is a list of ids — the price of keeping
    `Resume` flat and layout-agnostic (layout-plan.md, Decision 1).
    `clear: right` is what makes consecutive sidebar sections stack.
+   The sidebar sections are written BEFORE `#main` in the Markdown: paged.js
+   breaks the document at one point, in DOM order, so a sidebar that follows
+   `#main` and does not fit starts the whole main column on page 2.
    -------------------------------------------------------------------------- */
 
 
@@ -133,6 +136,13 @@ img { max-width: 100%; }
   padding-left: var(--sidebar-padding);
   padding-right: var(--sidebar-padding-right);
   font-size: 0.9rem;
+}
+
+/* The photo slot at the top of #contact. Without a width, `img { max-width: 100% }`
+   would stretch it over the whole sidebar. */
+#contact img {
+  display: block;
+  width: 35mm;
 }
 
 /* --------------------------------------------------------------------------

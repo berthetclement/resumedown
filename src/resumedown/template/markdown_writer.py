@@ -7,6 +7,7 @@ from resumedown.conventions import (
     ASSET_CSS_BUILTIN_FILE_NAME,
     ASSET_CSS_USER_FILE_NAME,
     ASSET_JS_BUILTIN_FILE_NAME,
+    ASSET_PHOTO_FILE_NAME,
     ASSETS_FOLDER_NAME,
     CUSTOM_FIELD,
     FENCE_CLOSE,
@@ -111,7 +112,7 @@ def init_resume(path: str | Path = INIT_RESUME_FILE_NAME) -> Path:
     dir_assets = output_dir / ASSETS_FOLDER_NAME
     dir_assets.mkdir(parents=True, exist_ok=False)
 
-    files = [ASSET_CSS_USER_FILE_NAME, ASSET_CSS_BUILTIN_FILE_NAME, ASSET_JS_BUILTIN_FILE_NAME]
+    files = [ASSET_CSS_USER_FILE_NAME, ASSET_CSS_BUILTIN_FILE_NAME, ASSET_JS_BUILTIN_FILE_NAME, ASSET_PHOTO_FILE_NAME]
     for asset_name in files:
         shutil.copy(RESOURCE_ASSETS_PATH / asset_name, dir_assets)
     return md_path

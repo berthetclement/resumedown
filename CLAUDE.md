@@ -310,6 +310,21 @@ Every section div carries both its `id` and `class="section"`, so levels never c
 across sections — `#contact h2` and `#experiences h2` are styled independently, and
 `#experiences .entry > h4` addresses one job's subtitle.
 
+## Design choices
+
+- **The sidebar holds `#contact` and `#skills` only**, and both are written *before*
+  `#main` (the field order of `Resume`). paged.js breaks the document at one point, in
+  DOM order: a sidebar written after `#main` that does not fit drags the main column to
+  page 2. This is how pagedown does it too.
+- **A sidebar taller than page 1 is a known limit**, with no automatic fix. The README
+  tells the user how to save lines.
+- **No bullets in the sidebar**: its lists render without markers.
+- **End date above start date** in the date gutter: entries run most-recent-first, so
+  the gutter reads as a decreasing timeline. The model keeps start then end; the CSS
+  places them.
+- **The photo is the first block of `#contact`**, a placeholder `photo.svg` shipped in
+  `resumedown_files/`, sized in `resume.css` (35mm), not the full sidebar width.
+
 ## Architecture
 
 `Resume` (pydantic) → `_write_model_to_markdown()` generates a starter `.md` → the user
