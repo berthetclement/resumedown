@@ -37,10 +37,12 @@ EMAIL_LINE = f"{HTML_CODE_EMAIL} {EMAIL}"
 PHONE_LINE = f"{HTML_CODE_PHONE} {PHONE}"
 WEBSITE_LINE = f"{GITHUB_ICON} {PERSONAL_WEBSITE}"
 
-# The photo sits first: it is the top of the sidebar. Its size is set in resume.css.
+# The photo is the very first block of #contact, above the `##` title (as in pagedown,
+# where it is the first line of the aside): the writer emits it before the title.
+# Its size is set in resume.css.
 PHOTO_LINE = f"![]({PATH_PHOTO})"
 
-CONTACT_DESCRIPTION = join_blocks([PHOTO_LINE, EMAIL_LINE, PHONE_LINE, WEBSITE_LINE])
+CONTACT_DESCRIPTION = join_blocks([EMAIL_LINE, PHONE_LINE, WEBSITE_LINE])
 
 # Skills part
 # A list renders as one block of `- item` lines, with no blank line between them:

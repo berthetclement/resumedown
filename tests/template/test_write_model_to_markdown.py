@@ -80,11 +80,16 @@ def test_sidebar_sections_come_before_main(default_markdown_resume_content: str)
     ]
 
 
-# the photo is the first block of the sidebar, pointing at the shipped placeholder
-def test_contact_starts_with_the_photo(default_markdown_resume_content: str) -> None:
+# the photo tops the sidebar, above the "##" title (pagedown: first line of the aside)
+def test_contact_photo_comes_before_the_section_title(default_markdown_resume_content: str) -> None:
+    # given
+    section = _section_lines(default_markdown_resume_content, "contact")
+    photo = "![](resumedown_files/photo.svg)"
+
     # then
-    section = [line for line in _section_lines(default_markdown_resume_content, "contact") if line]
-    assert section[3] == "![](resumedown_files/photo.svg)"
+    title_index = next(i for i, line in enumerate(section) if line.startswith("## "))
+    assert photo in section
+    assert section.index(photo) < title_index
 
 
 # test title field parameter construction by Pydantic

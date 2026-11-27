@@ -318,12 +318,16 @@ across sections — `#contact h2` and `#experiences h2` are styled independently
   page 2. This is how pagedown does it too.
 - **A sidebar taller than page 1 is a known limit**, with no automatic fix. The README
   tells the user how to save lines.
-- **No bullets in the sidebar**: its lists render without markers.
+- **No bullets in the sidebar**: its lists render without markers, as in pagedown. A
+  skill line is a label, not an item of an enumeration, and a marker costs indent in a
+  narrow column. A user who wants them adds them back in `theme.css`.
 - **End date above start date** in the date gutter: entries run most-recent-first, so
   the gutter reads as a decreasing timeline. The model keeps start then end; the CSS
   places them.
-- **The photo is the first block of `#contact`**, a placeholder `photo.svg` shipped in
-  `resumedown_files/`, sized in `resume.css` (35mm), not the full sidebar width.
+- **The photo is the very first block of `#contact`**, above the `##` title (as the
+  first line of pagedown's aside); the writer emits it before the title. A
+  placeholder `photo.svg` is shipped in `resumedown_files/`, sized in `resume.css`
+  (35mm), not the full sidebar width.
 
 ## Architecture
 
