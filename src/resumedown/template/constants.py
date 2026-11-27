@@ -1,4 +1,4 @@
-from resumedown.conventions import ASSETS_FOLDER_NAME, PATH_FILE_YAML_CSS, join_blocks
+from resumedown.conventions import ASSETS_FOLDER_NAME, PATH_FILE_YAML_CSS, PATH_PHOTO, join_blocks
 
 # Constants for the resume builder template
 
@@ -37,14 +37,21 @@ EMAIL_LINE = f"{HTML_CODE_EMAIL} {EMAIL}"
 PHONE_LINE = f"{HTML_CODE_PHONE} {PHONE}"
 WEBSITE_LINE = f"{GITHUB_ICON} {PERSONAL_WEBSITE}"
 
+# The photo is the very first block of #contact, above the `##` title (as in pagedown,
+# where it is the first line of the aside): the writer emits it before the title.
+# Its size is set in resume.css.
+PHOTO_LINE = f"![]({PATH_PHOTO})"
+
 CONTACT_DESCRIPTION = join_blocks([EMAIL_LINE, PHONE_LINE, WEBSITE_LINE])
 
 # Skills part
-STAR_SYMBOL_FULL = "&#9733;"
-STAR_SYMBOL_EMPTY = "&#9734;"
-R_RATING_SKILL_SYMBOL = f"R {STAR_SYMBOL_FULL * 5}"
-PYTHON_RATING_SKILL_SYMBOL = f"Python {STAR_SYMBOL_FULL * 4}{STAR_SYMBOL_EMPTY * 1}"
-SKILLS_DESCRIPTION = join_blocks([R_RATING_SKILL_SYMBOL, PYTHON_RATING_SKILL_SYMBOL])
+# A list renders as one block of `- item` lines, with no blank line between them:
+# the sidebar must fit on page 1, so several skills share a line under a bold title.
+SKILLS_DESCRIPTION = [
+    "**Languages**: Python, R, SQL",
+    "**Data**: pandas, scikit-learn",
+    "**Tools**: Git, Docker",
+]
 
 # Work experience part
 EXPERIENCES = [

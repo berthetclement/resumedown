@@ -12,7 +12,7 @@ from resumedown.models.resume_model import BriefEntry, Entry, Main, Resume, Titl
         (BriefEntry, ["description"]),
         (TitledEntry, ["title", "description"]),
         (Entry, ["title", "subtitle", "location", "start_date", "end_date", "description"]),
-        (Resume, ["main", "contact", "skills", "experiences", "education", "personal_projects", "languages"]),
+        (Resume, ["contact", "skills", "main", "experiences", "education", "personal_projects", "languages"]),
     ],
 )
 def test_model_fields_are_declared_in_contract_order(model: type[BaseModel], expected: list[str]) -> None:

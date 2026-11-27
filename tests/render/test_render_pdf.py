@@ -71,3 +71,37 @@ def test_render_pdf_produce_complete_pdf(tmp_path: Path, as_input: Callable[[Pat
     output_pdf_path = render_pdf(as_input(md_path))
     assert output_pdf_path == md_path.with_suffix(".pdf")
     assert output_pdf_path.read_bytes().startswith(b"%PDF")
+
+
+@pytest.mark.pdf
+def test_sidebar_starts_level_with_main_on_page_one(tmp_path: Path) -> None:
+    """The sidebar sits at the top of page 1, not pushed below the header (#31)."""
+    from playwright.sync_api import sync_playwright
+
+    from resumedown.render.renderer import render_resume
+    from resumedown.render.server import local_server
+
+    # given
+    md_path = init_resume(path=tmp_path / "sidebar")
+    html_path = render_resume(md_path)
+
+    with local_server(html_path.parent) as base_url, sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        try:
+            page = browser.new_page()
+            page.add_init_script("window.PagedConfig = { after: () => { window.__pagedDone = true } }")
+            page.goto(f"{base_url}/{html_path.name}")
+            page.wait_for_function("window.__pagedDone === true")
+
+            # then — a blank page cannot pass: pagination ran
+            assert page.eval_on_selector_all(".pagedjs_page", "e => e.length") > 0
+
+            contact_top = page.locator('[data-id="contact"]').first.bounding_box()
+            main_top = page.locator('[data-id="main"]').first.bounding_box()
+            assert contact_top is not None
+            assert main_top is not None
+
+            # same top, within 1 px: the sidebar is at the top of the page
+            assert abs(contact_top["y"] - main_top["y"]) < 1
+        finally:
+            browser.close()

@@ -7,6 +7,7 @@ from resumedown.conventions import (
     ASSET_CSS_BUILTIN_FILE_NAME,
     ASSET_CSS_USER_FILE_NAME,
     ASSET_JS_BUILTIN_FILE_NAME,
+    ASSET_PHOTO_FILE_NAME,
     ASSETS_FOLDER_NAME,
     CUSTOM_FIELD,
     FENCE_CLOSE,
@@ -19,7 +20,7 @@ from resumedown.conventions import (
     join_blocks,
 )
 from resumedown.models.resume_model import Resume
-from resumedown.template.constants import YAML_FRONT_MATTER
+from resumedown.template.constants import PHOTO_LINE, YAML_FRONT_MATTER
 from resumedown.template.default_resume import DEFAULT_RESUME
 
 RESOURCE_ASSETS_PATH = Path(__file__).parent.parent / "assets"
@@ -45,9 +46,9 @@ def _field_blocks(model: BaseModel) -> list[str]:
     return blocks
 
 
-def _section(section_id: str, title: str | None, body: list[str]) -> str:
-    """Wrap body blocks in the section container."""
-    blocks = [anchor(section_id), FENCE_OPEN]
+def _section(section_id: str, title: str | None, body: list[str], lead: list[str] | None = None) -> str:
+    """Wrap body blocks in the section container; `lead` blocks come before the title."""
+    blocks = [anchor(section_id), FENCE_OPEN, *(lead or [])]
     if title is not None:
         blocks.append(f"{heading_marker(SECTION_TITLE_LEVEL)} {title}")
     blocks += body
@@ -74,7 +75,9 @@ def _write_model_to_markdown(model: Resume, file_path: Path) -> None:
         for section_model in section_models:
             body.extend(_field_blocks(section_model))
 
-        sections.append(_section(field_name, field_info.title, body))
+        # the photo tops the sidebar, above the "Contact Information" title
+        lead = [PHOTO_LINE] if field_name == "contact" else None
+        sections.append(_section(field_name, field_info.title, body, lead))
 
     document = join_blocks([YAML_FRONT_MATTER] + sections, SECTION_BREAK)
     file_path.write_text(document + "\n", encoding="utf-8")
@@ -111,7 +114,7 @@ def init_resume(path: str | Path = INIT_RESUME_FILE_NAME) -> Path:
     dir_assets = output_dir / ASSETS_FOLDER_NAME
     dir_assets.mkdir(parents=True, exist_ok=False)
 
-    files = [ASSET_CSS_USER_FILE_NAME, ASSET_CSS_BUILTIN_FILE_NAME, ASSET_JS_BUILTIN_FILE_NAME]
+    files = [ASSET_CSS_USER_FILE_NAME, ASSET_CSS_BUILTIN_FILE_NAME, ASSET_JS_BUILTIN_FILE_NAME, ASSET_PHOTO_FILE_NAME]
     for asset_name in files:
         shutil.copy(RESOURCE_ASSETS_PATH / asset_name, dir_assets)
     return md_path

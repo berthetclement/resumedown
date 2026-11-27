@@ -90,6 +90,7 @@ resume/
 └── resumedown_files/
     ├── resume.css             # layout
     ├── theme.css              # colours and fonts, yours to edit
+    ├── photo.svg              # placeholder photo: replace it with yours
     └── paged.polyfill.min.js  # pagination
 ```
 
@@ -100,6 +101,19 @@ Follow these steps to customize it to your needs:
    of `resume.md`, then edit `resumedown_files/theme.css`.
 3. Save, then run `render_resume()` to generate html page.
 4. You can display html page with `preview_resume()` or directly use `render_pdf()`.
+
+### The sidebar must fit on page 1
+
+The right column holds `#contact` and `#skills`, and they come first in the file, before
+`#main`. If they are taller than page 1, paged.js moves the rest of the page after
+them, and the main column starts on page 2. There is no automatic fix for a sidebar
+taller than one page. To save lines:
+
+- put several skills on one line, under a bold group title (`**Tools**: Git, Docker`);
+- write the skills as a list (`- item` lines), with no blank line between them;
+- shrink the photo, or remove its line (`![](resumedown_files/photo.svg)`).
+
+Replace `photo.svg` with your own image, or point the line at another file.
 
 ## Notes
 

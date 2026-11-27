@@ -65,6 +65,33 @@ def test_each_field_gets_its_own_section(default_markdown_resume_content: str) -
     assert lines.count("::: section") == len(Resume.model_fields)
 
 
+# The sidebar sections must come before main: paged.js breaks at one point in DOM order
+def test_sidebar_sections_come_before_main(default_markdown_resume_content: str) -> None:
+    # then — written out literally, a derived order would follow any reordering
+    ids = [line for line in default_markdown_resume_content.splitlines() if line.startswith("{#")]
+    assert ids == [
+        "{#contact}",
+        "{#skills}",
+        "{#main}",
+        "{#experiences}",
+        "{#education}",
+        "{#personal_projects}",
+        "{#languages}",
+    ]
+
+
+# the photo tops the sidebar, above the "##" title (pagedown: first line of the aside)
+def test_contact_photo_comes_before_the_section_title(default_markdown_resume_content: str) -> None:
+    # given
+    section = _section_lines(default_markdown_resume_content, "contact")
+    photo = "![](resumedown_files/photo.svg)"
+
+    # then
+    title_index = next(i for i, line in enumerate(section) if line.startswith("## "))
+    assert photo in section
+    assert section.index(photo) < title_index
+
+
 # test title field parameter construction by Pydantic
 def test_section_title_comes_from_field_title(default_markdown_resume_content: str) -> None:
     # then
